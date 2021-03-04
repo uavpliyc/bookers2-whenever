@@ -32,7 +32,7 @@ class User < ApplicationRecord
   def following?(user)
     following_user.include?(user)
   end
-  
+
   def User.search(search, user_or_book, how_search)
     if user_or_book == "1"
       if how_search == "1"
@@ -47,6 +47,18 @@ class User < ApplicationRecord
         User.all
       end
     end
+  end
+
+  # 都道府県参照
+  include JpPrefecture
+  jp_prefecture :prefecture_code
+
+  def prefecture_name
+    JpPrefecture::Prefecture.find(code: prefecture_code).try(:name)
+  end
+
+  def prefecture_name=(prefecture_name)
+    self.prefecture_code = JpPrefecture::Prefecture.find(name: prefecture_name).code
   end
 
   attachment :profile_image, destroy: false
