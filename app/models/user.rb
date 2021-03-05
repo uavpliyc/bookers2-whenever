@@ -13,6 +13,10 @@ class User < ApplicationRecord
   has_many :following_user, through: :follower, source: :followed # 自分がフォローしている人
   has_many :follower_user, through: :followed, source: :follower # 自分をフォローしている人
 
+  has_many :user_rooms, dependent: :destroy
+  has_many :chats, dependent: :destroy
+  has_many :rooms, through: :user_rooms, dependent: :destroy
+
 
   def already_favorited?(book)
     self.favorites.exists?(book_id: book.id)
@@ -60,7 +64,7 @@ class User < ApplicationRecord
   def prefecture_name=(prefecture_name)
     self.prefecture_code = JpPrefecture::Prefecture.find(name: prefecture_name).code
   end
-  
+
   # 新規登録後メール送信
   after_create :send_welcome_mail
 
