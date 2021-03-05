@@ -26,6 +26,6 @@
   <% if user_signed_in? && user == current_user %>
     <%= link_to '',edit_user_path(user),class: "btn btn-outline-secondary btn-block fas fa-user-cog edit_user_#{user.id}" %>
   <% else %>
-    <%= render 'follow', user: @user %>
+    <%= render 'users/follow', user: @user %>
   <% end %>
 </div>
