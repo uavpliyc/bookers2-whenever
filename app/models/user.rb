@@ -60,6 +60,13 @@ class User < ApplicationRecord
   def prefecture_name=(prefecture_name)
     self.prefecture_code = JpPrefecture::Prefecture.find(name: prefecture_name).code
   end
+  
+  # 新規登録後メール送信
+  after_create :send_welcome_mail
+
+  def send_welcome_mail
+    ContactMailer.send_signup_email(self).deliver
+  end
 
   attachment :profile_image, destroy: false
 
