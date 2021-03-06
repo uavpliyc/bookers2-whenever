@@ -73,3 +73,5 @@ gem 'jquery-rails'
 
 gem 'jquery-rails'
 gem 'jp_prefecture'
+
+gem 'whenever', require: false

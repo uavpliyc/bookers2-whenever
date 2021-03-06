@@ -66,10 +66,11 @@ class User < ApplicationRecord
   end
 
   # 新規登録後メール送信
-  after_create :send_welcome_mail
+  # after_create :send_welcome_mail
 
   def send_welcome_mail
     ContactMailer.send_signup_email(self).deliver
+    UserMailer.notify_user.deliver
   end
 
   attachment :profile_image, destroy: false
